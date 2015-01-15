@@ -92,8 +92,8 @@ var ModelPrototype = {
             }
 
             client.index({
-                index: this.index,
-                type: this.type,
+                index: this._index,
+                type: this._type,
                 id: this.id, // Optional?
                 //version: this.version,
                 body: this.__data
@@ -119,8 +119,8 @@ var ModelPrototype = {
             }
 
             client.update({
-                index: this.index,
-                type: this.type,
+                index: this._index,
+                type: this._type,
                 id: this.id,
                 version: this.version,
                 body: {
@@ -139,8 +139,8 @@ var ModelPrototype = {
 
         // Use client.delete
         client.delete({
-            index: this.index,
-            type: this.type,
+            index: this._index,
+            type: this._type,
             id: this.id
         }, function(err, response) {
             callback(err, this);
@@ -349,11 +349,11 @@ Query.prototype = {
         var single = typeof this.query.id === "string";
 
         var query = {
-            index: model.index,
-            type: model.type,
+            index: model._index,
+            type: model._type,
             from: this.options.skip,
             size: this.options.limit,
-            fields: this.options.fields.split(/\s+/),
+            fields: typeof this.options.fields === "string" ? this.options.fields.split(/\s+/) : this.options.fields,
             body: {
                 query: {
                    match: this.query

@@ -548,8 +548,8 @@ return {
         });
 
         Model.prototype = {
-            _type: modelName,
-            _index: modelName
+            _type: modelName.toLowerCase(),
+            _index: modelName.toLowerCase()
         };
 
         _.extend(Model, ModelStatics || {});

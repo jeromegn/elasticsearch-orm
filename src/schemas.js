@@ -564,11 +564,6 @@ return {
         for (var k in hooks) {
           Model[k] = hooks[k];
         }
-        // Define a new method that is able to invoke pre and post middleware
-        Model.hook('save', Model.prototype.save);
-        Model.hook('update', Model.prototype.update);
-        Model.hook('remove', Model.prototype.remove);
-        Model.hook('create', Model.create);
 
         return Model;
     }

@@ -1,4 +1,5 @@
 var _ = require("lodash");
+var hooks = require('hooks')
 
 // Store the models outside of the module, this mimics Mongoose's
 // behavior and makes it possible to reference the same models in
@@ -559,6 +560,15 @@ return {
         _.extend(Model.prototype, schema.methods);
 
         models[modelName] = Model;
+
+        for (var k in hooks) {
+          Model[k] = hooks[k];
+        }
+        // Define a new method that is able to invoke pre and post middleware
+        Model.hook('save', Model.prototype.save);
+        Model.hook('update', Model.prototype.update);
+        Model.hook('remove', Model.prototype.remove);
+        Model.hook('create', Model.create);
 
         return Model;
     }
